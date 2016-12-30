@@ -7,7 +7,7 @@
 			}
 			
 			$data['result'] = $this->Shop->get_shop();
-			$this->load->view('viewshop', $data);
+			$this->load->view('shop/viewshop', $data);
 		}
 		
 		function addshop(){
@@ -16,7 +16,7 @@
 			}
 			
 			$error['errors'] = '';;
-			$this->load->view('insertshop', $error);
+			$this->load->view('shop/insertshop', $error);
 		}
 		
 		function insert(){
@@ -52,7 +52,7 @@
 			}
 			
 			$data['result'] = $this->Shop->shop_edit($id);
-			$this->load->view('update_shop', $data);
+			$this->load->view('shop/update_shop', $data);
 			
 		}
 		

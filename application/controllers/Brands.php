@@ -7,7 +7,7 @@
 			}
 			
 			$data['result'] = $this->Brand->get_brand();
-			$this->load->view('viewbrand', $data);
+			$this->load->view('brand/viewbrand', $data);
 		}
 		
 		function add_brand(){
@@ -15,7 +15,7 @@
 				redirect('logins/index');
 			}
 			
-			$this->load->view('insertbrand');
+			$this->load->view('brand/insertbrand');
 		}
 		
 		function insert(){
@@ -52,7 +52,7 @@
 			}
 			
 			$data['result'] = $this->Brand->brand_edit($id);
-			$this->load->view('update_brand', $data);
+			$this->load->view('brand/update_brand', $data);
 		}
 		
 		function do_edit(){

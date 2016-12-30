@@ -3,12 +3,12 @@
 		
 		function index(){
 			$data['result'] = $this->Category->get_category();
-			$this->load->view('view_category', $data);
+			$this->load->view('category/view_category', $data);
 		}
 		
 		function add_category(){
 			$error['errors'] = '';;
-			$this->load->view('insert_category', $error);
+			$this->load->view('category/insert_category', $error);
 		}
 		
 		function insert(){
@@ -32,7 +32,7 @@
 		
 		function edit($id){
 			$data['result'] = $this->Category->category_edit($id);
-			$this->load->view('update_category', $data);
+			$this->load->view('category/update_category', $data);
 			
 		}
 		

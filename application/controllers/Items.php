@@ -7,7 +7,7 @@
 			}
 			
 			$data['result'] = $this->Item->get_item();
-			$this->load->view('viewitem', $data);
+			$this->load->view('item/viewitem', $data);
 		}
 		
 		function additem(){
@@ -15,7 +15,7 @@
 				redirect('logins/index');
 			}
 			
-			$this->load->view('insertitem');
+			$this->load->view('item/insertitem');
 		}
 		
 		function insert(){
@@ -48,7 +48,7 @@
 			}
 			
 			$data['result'] = $this->Item->item_edit($id);
-			$this->load->view('update_item', $data);
+			$this->load->view('item/update_item', $data);
 			
 		}
 		
