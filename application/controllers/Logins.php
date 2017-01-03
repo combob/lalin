@@ -7,18 +7,17 @@
 		}
 		
 		function check_users(){
-			$this->form_validation->set_rules('gmail', 'Gmail', 'required');
-			$this->form_validation->set_rules('password', 'Password', 'required');
+			$this->form_validation->set_rules('u_email', 'Email', 'required');
+			$this->form_validation->set_rules('u_password', 'Password', 'required');
 
 			if($this->form_validation->run() == False){
 				$errors['error'] = '';
 				$this->load->view('form_login', $errors);
-				echo 'on';
 			}else{
 				
-				$gmail = $this->input->post('gmail');
-				$pass = $this->input->post('password');
-				$query = $this->User->check_account($gmail, $pass);
+				$u_email = $this->input->post('u_email');
+				$u_password = $this->input->post('u_password');
+				$query = $this->User->check_account($u_email, $u_password);
 				
 				if($query->num_rows()>0){
 					//set sesstion
@@ -26,7 +25,7 @@
 					$this->session->set_userdata('user_id', $userid);
 					redirect('Logins/profile');
 				}else{
-					$errors['error'] = "Gmail and Password doesn't correct";
+					$errors['error'] = "Email and Password doesn't correct";
 					$this->load->view('form_login', $errors);
 					echo "no";
 				}
