@@ -5,8 +5,10 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lalinmall | Best Online shopping in Cambodia</title>
+	<script type="text/javascript" src="<?php echo base_url();?>assets/js/vendor/jquery-latest.min.js"></script>
     <link rel="stylesheet" href="<?php echo base_url();?>/assets/css/foundation.css">
     <link rel="stylesheet" href="<?php echo base_url();?>/assets/css/app.css">
+    <link rel="stylesheet" href="<?php echo base_url();?>/assets/css/menu.css">
     <link rel="stylesheet" href="<?php echo base_url();?>/assets/style.css">
   </head>
   <body>

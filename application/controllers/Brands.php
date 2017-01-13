@@ -6,8 +6,11 @@
 				redirect('logins/index');
 			}
 			
+			$this->load->view('master_page/header');
+			$this->load->view('master_page/logo');
 			$data['result'] = $this->Brand->get_brand();
 			$this->load->view('brand/viewbrand', $data);
+			$this->load->view('master_page/footer');
 		}
 		
 		function add_brand(){
@@ -15,7 +18,10 @@
 				redirect('logins/index');
 			}
 			
+			$this->load->view('master_page/header');
+			$this->load->view('master_page/logo');
 			$this->load->view('brand/insertbrand');
+			$this->load->view('master_page/footer');
 		}
 		
 		function insert(){
@@ -51,8 +57,11 @@
 				redirect('logins/index');
 			}
 			
+			$this->load->view('master_page/header');
+			$this->load->view('master_page/logo');
 			$data['result'] = $this->Brand->brand_edit($id);
 			$this->load->view('brand/update_brand', $data);
+			$this->load->view('master_page/footer');
 		}
 		
 		function do_edit(){

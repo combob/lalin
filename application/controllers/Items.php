@@ -2,38 +2,93 @@
 	class Items extends CI_Controller{
 		
 		function index(){
+			// can't not access if don't login
 			if(!$this->session->userdata('user_id')){
 				redirect('logins/index');
 			}
 			
+			$this->load->view('master_page/header');
+			$this->load->view('master_page/logo');
 			$data['result'] = $this->Item->get_item();
 			$this->load->view('item/viewitem', $data);
+			$this->load->view('master_page/footer');
 		}
 		
 		function additem(){
+			// can't not access if don't login
 			if(!$this->session->userdata('user_id')){
 				redirect('logins/index');
 			}
 			
-			$this->load->view('item/insertitem');
+			// get data from DB 
+			$data['result'] = $this->Item->get_brands();
+			$data['posts'] = $this->Item->get_categories();
+			$data['shop'] = $this->Item->get_shop();
+			
+			$this->load->view('master_page/header');
+			$this->load->view('master_page/logo');
+			$this->load->view('item/insertitem',$data);
+			$this->load->view('master_page/footer');
 		}
 		
 		function insert(){
+			// can't not access if don't login
 			if(!$this->session->userdata('user_id')){
 				redirect('logins/index');
 			}
 			
-			$data['item_name'] = $this->input->post('item_name');
-			$data['price'] = $this->input->post('price');
-			$data['category'] = $this->input->post('category');
-			$data['user_id'] = $this->session->userdata('user_id');
+			//form validaton 
+			$this->form_validation->set_rules('item_name', 'Item Name', 'required');
+			$this->form_validation->set_rules('price', 'Price', 'required');
+			$this->form_validation->set_rules('category', 'Category', 'required');
+			//$this->form_validation->set_rule('brand', 'Brand', 'required');
+			//$this->form_validation->set_rule('shop', 'Shop', 'required');
 			
-			if($this->Item->insert_item($data)){
-					redirect('Items/index');	
+			// check form validaton
+			if($this->form_validation->run() == False){
+				$data['result'] = $this->Item->get_brands();
+				$data['posts'] = $this->Item->get_categories();
+				$data['shop'] = $this->Item->get_shop();
+				
+				$this->load->view('master_page/header');
+				$this->load->view('master_page/logo');
+				$this->load->view('item/insertitem',$data);
+				$this->load->view('master_page/footer');
+			}else{
+				
+				// get data form input
+				$data['item_name'] = $this->input->post('item_name');
+				$data['price'] = $this->input->post('price');
+				//$data['description'] = $this->input->post('description');
+				$data['category'] = $this->input->post('category');
+				//$data['brand'] = $this->input->post('brand');
+				//$data['shop'] = $this->input->post('shop');
+				$data['user_id'] = $this->session->userdata('user_id');
+				
+				// stored in folder uploads
+				$config['upload_path'] = './uploads/thumbnail/';
+				// allowed .git/.jpg/.png
+				$config['allowed_types'] = 'gif|jpg|png|jpeg';
+				//$this->upload->initialize($config);
+				$this->load->library('upload', $config);
+				
+				// check img
+				if($this->upload->do_upload('thumbnail')){
+					$file_info = $this->upload->data();
+					$data['thumbnail'] = $file_info['file_name'];
 				}else{
-					redirect('Items/additem');
 					echo 'no';
 				}
+				
+				// check data
+				if($this->Item->insert_item($data)){
+						redirect('Items/index');	
+					}else{
+						redirect('Items/additem');
+						echo 'no';
+					}
+				}
+			
 		}
 		
 		function delete($id){
@@ -43,12 +98,16 @@
 		}
 		
 		function edit($id){
+			// can't not access if don't login
 			if(!$this->session->userdata('user_id')){
 				redirect('logins/index');
 			}
 			
+			$this->load->view('master_page/header');
+			$this->load->view('master_page/logo');
 			$data['result'] = $this->Item->item_edit($id);
 			$this->load->view('item/update_item', $data);
+			$this->load->view('master_page/footer');
 			
 		}
 		
@@ -62,7 +121,16 @@
 			if($this->Item->item_update($itemId, $data)){
 				redirect('items/index');
 			}else{
-				echo 'No';
+				$data['item_name'] = $this->input->post('item_name');
+				$data['price'] = $this->input->post('price');
+				$data['category'] = $this->input->post('category');
+				$data['user_id'] = $this->session->userdata('user_id');
+				$itemId = $this->input->post('item_id');
 			}
+		}
+		function test(){
+			$this->load->view('master_page/header.php');
+			$this->load->view('master_page/page.php');
+			$this->load->view('master_page/footer.php');
 		}
 	}

@@ -28,4 +28,25 @@
 			$this->db->where('item_id', $id);
 			return $this->db->update('items', $data); 
 		}
+		
+		function get_brands(){
+			//$this->db->select('brand');
+			$this->db->from('brand');
+			$this->db->where('brand.status', 1);
+			return $this->db->get();
+			
+		}
+		
+		function get_categories(){
+			
+			$this->db->from('categories');
+			$this->db->where('categories.status', 1);
+			return $this->db->get();
+		}
+		
+		function get_shop(){
+			$this->db->from('shops');
+			$this->db->where('shops.status', 1);
+			return $this->db->get();
+		}
 	}
