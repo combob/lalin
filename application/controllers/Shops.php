@@ -8,7 +8,8 @@
 			}
 			
 			$this->load->view('master_page/header');
-			$this->load->view('master_page/logo');
+			$this->load->view('master_page/search');
+				$this->load->view('master_page/menu');
 			$data['result'] = $this->Shop->get_shop();
 			$this->load->view('shop/viewshop', $data);
 			$this->load->view('master_page/footer');
@@ -25,7 +26,8 @@
 			$data['errors'] = '';
 			
 			$this->load->view('master_page/header');
-			$this->load->view('master_page/logo');
+			$this->load->view('master_page/search');
+				$this->load->view('master_page/menu');
 			$this->load->view('shop/insertshop', $data);
 			$this->load->view('master_page/footer');
 		}
@@ -37,13 +39,14 @@
 			}
 			
 			// form validation
-			$this->form_validation->set_rules('shop_name', 'Shop_name', 'required');
+			$this->form_validation->set_rules('shop_name', 'Shop Name', 'required');
 			$this->form_validation->set_rules('category', 'Category', 'required');
 			
 			// check form validation
 			if($this->form_validation->run() == False){
 				$this->load->view('master_page/header');
-				$this->load->view('master_page/logo');
+				$this->load->view('master_page/search');
+				$this->load->view('master_page/menu');
 				$data['posts'] = $this->Shop->get_categories();
 				$data['errors'] = '';
 				$this->load->view('shop/insertshop', $data);
@@ -106,21 +109,44 @@
 			}
 			
 			$this->load->view('master_page/header');
-			$this->load->view('master_page/logo');
+			$this->load->view('master_page/search');
+			$this->load->view('master_page/menu');
 			$data['result'] = $this->Shop->shop_edit($id);
+			$data['posts'] = $this->Shop->get_categories();
 			$this->load->view('shop/update_shop', $data);
 			$this->load->view('master_page/footer');
 			
 		}
 		
 		function do_edit(){
+			
 			$data['shop_name'] = $this->input->post('shop_name');
 			$data['category'] = $this->input->post('category');
+			$data['description'] = $this->input->post('description');
 			$data['user_id'] = $this->session->userdata('user_id');
 			$shopId = $this->input->post('shop_id');
 			
+			
+			$data1['contact_name'] = $this->input->post('contact_name');
+			$data1['contact_phone'] = $this->input->post('contact_phone');
+			$data1['contact_email'] = $this->input->post('contact_email');
+			$data1['contact_address'] = $this->input->post('contact_address');
+
+			$con_id = $shopId;
+			
+			//var_dump($data1['contact_phone']);
+			//var_dump($data1['contact_name']);
+			//var_dump($data1['contact_email']);
+			//die();
+			
 			if($this->Shop->shop_update($shopId, $data)){
-				redirect('shops/index');
+				
+				if($this->Shop->shop_contact_update($con_id, $data1)){
+					redirect('shops/index');
+				}else{
+					echo 'can not update shop_contact';
+				}
+				
 			}else{
 				echo 'No';
 			}

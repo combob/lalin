@@ -21,13 +21,20 @@
 		function shop_edit($id){
 			$this->db->from('shops');
 			$this->db->join('users', 'shops.user_id = users.user_id');
-			$this->db->where('shop_id', $id);
+			$this->db->join('shop_contact', 'shops.shop_id = shop_contact.shop_id');
+			$this->db->where('shops.shop_id', $id);
 			return $this->db->get()->row();
 		}
 		
 		function shop_update($id, $data){
+			
 			$this->db->where('shop_id', $id);
 			return $this->db->update('shops', $data);
+		}
+		
+		function shop_contact_update($con_id, $data1){
+			$this->db->where('shop_id', $con_id);
+			return $this->db->update('shop_contact', $data1);
 		}
 		
 		function get_categories(){

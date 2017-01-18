@@ -8,7 +8,8 @@
 			}
 			
 			$this->load->view('master_page/header');
-			$this->load->view('master_page/logo');
+			$this->load->view('master_page/search');
+			$this->load->view('master_page/menu');
 			$data['result'] = $this->Item->get_item();
 			$this->load->view('item/viewitem', $data);
 			$this->load->view('master_page/footer');
@@ -26,7 +27,8 @@
 			$data['shop'] = $this->Item->get_shop();
 			
 			$this->load->view('master_page/header');
-			$this->load->view('master_page/logo');
+			$this->load->view('master_page/search');
+			$this->load->view('master_page/menu');
 			$this->load->view('item/insertitem',$data);
 			$this->load->view('master_page/footer');
 		}
@@ -41,8 +43,8 @@
 			$this->form_validation->set_rules('item_name', 'Item Name', 'required');
 			$this->form_validation->set_rules('price', 'Price', 'required');
 			$this->form_validation->set_rules('category', 'Category', 'required');
-			//$this->form_validation->set_rule('brand', 'Brand', 'required');
-			//$this->form_validation->set_rule('shop', 'Shop', 'required');
+			$this->form_validation->set_rule('brand', 'Brand', 'required');
+			$this->form_validation->set_rule('shop', 'Shop', 'required');
 			
 			// check form validaton
 			if($this->form_validation->run() == False){
@@ -51,7 +53,8 @@
 				$data['shop'] = $this->Item->get_shop();
 				
 				$this->load->view('master_page/header');
-				$this->load->view('master_page/logo');
+				$this->load->view('master_page/search');
+				$this->load->view('master_page/menu');
 				$this->load->view('item/insertitem',$data);
 				$this->load->view('master_page/footer');
 			}else{
@@ -59,10 +62,10 @@
 				// get data form input
 				$data['item_name'] = $this->input->post('item_name');
 				$data['price'] = $this->input->post('price');
-				//$data['description'] = $this->input->post('description');
+				$data['description'] = $this->input->post('description');
 				$data['category'] = $this->input->post('category');
-				//$data['brand'] = $this->input->post('brand');
-				//$data['shop'] = $this->input->post('shop');
+				$data['brand'] = $this->input->post('brand');
+				$data['shop'] = $this->input->post('shop');
 				$data['user_id'] = $this->session->userdata('user_id');
 				
 				// stored in folder uploads
@@ -87,7 +90,7 @@
 						redirect('Items/additem');
 						echo 'no';
 					}
-				}
+			}
 			
 		}
 		
@@ -104,8 +107,17 @@
 			}
 			
 			$this->load->view('master_page/header');
-			$this->load->view('master_page/logo');
+			$this->load->view('master_page/search');
+			$this->load->view('master_page/menu');
+			
+			$data['brand'] = $this->Item->get_brands();
+			$data['category'] = $this->Item->get_categories();
+			$data['shop'] = $this->Item->get_shop();
 			$data['result'] = $this->Item->item_edit($id);
+			
+			//var_dump($data['category']);
+			//die();
+			
 			$this->load->view('item/update_item', $data);
 			$this->load->view('master_page/footer');
 			
@@ -115,9 +127,13 @@
 			$data['item_name'] = $this->input->post('item_name');
 			$data['price'] = $this->input->post('price');
 			$data['category'] = $this->input->post('category');
+			$data['shop'] = $this->input->post('shop');
+			$data['brand'] = $this->input->post('brand');
 			$data['user_id'] = $this->session->userdata('user_id');
 			$itemId = $this->input->post('item_id');
 			
+			//var_dump($data['category']);
+			//die();
 			if($this->Item->item_update($itemId, $data)){
 				redirect('items/index');
 			}else{
@@ -128,9 +144,5 @@
 				$itemId = $this->input->post('item_id');
 			}
 		}
-		function test(){
-			$this->load->view('master_page/header.php');
-			$this->load->view('master_page/page.php');
-			$this->load->view('master_page/footer.php');
-		}
+		
 	}

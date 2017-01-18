@@ -3,7 +3,8 @@
 		
 		function index(){
 			$this->load->view('master_page/header');
-			$this->load->view('master_page/logo');
+			$this->load->view('master_page/search');
+			$this->load->view('master_page/menu');
 			$data['result'] = $this->Category->get_category();
 			$this->load->view('category/view_category', $data);
 			$this->load->view('master_page/footer');
@@ -11,7 +12,8 @@
 		
 		function add_category(){
 			$this->load->view('master_page/header');
-			$this->load->view('master_page/logo');
+			$this->load->view('master_page/search');
+			$this->load->view('master_page/menu');
 			$error['errors'] = '';
 			$this->load->view('category/insert_category', $error);
 			$this->load->view('master_page/footer');

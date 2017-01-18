@@ -2,7 +2,7 @@
 	class Logins extends CI_Controller{
 		
 		function index(){
-			$this->load->view('master_page/header');
+			$this->load->view('master_page/header_login');
 			$this->load->view('master_page/logo');
 			$errors['error'] = '';
 			$this->load->view('user/form_login', $errors);
@@ -16,7 +16,7 @@
 			
 			//check form validation
 			if($this->form_validation->run() == False){
-				$this->load->view('master_page/header');
+				$this->load->view('master_page/header_login');
 				$this->load->view('master_page/logo');
 				$errors['error'] = '';
 				$this->load->view('user/form_login', $errors);
@@ -34,7 +34,7 @@
 					$this->session->set_userdata('user_id', $userid);
 					redirect('Logins/profile');
 				}else{
-					$this->load->view('master_page/header');
+					$this->load->view('master_page/header_login');
 					$this->load->view('master_page/logo');
 					$errors['error'] = "Email and Password doesn't correct";
 					$this->load->view('user/form_login', $errors);
@@ -61,7 +61,7 @@
 			
 		}
 		function signup(){
-			$this->load->view('master_page/header');
+			$this->load->view('master_page/header_login');
 			$this->load->view('master_page/logo');
 			$this->load->view('user/signup');
 			$this->load->view('master_page/footer');
@@ -79,7 +79,7 @@
 			
 			//check form validation
 			if($this->form_validation->run() == False){
-				$this->load->view('master_page/header');
+				$this->load->view('master_page/header_login');
 				$this->load->view('master_page/logo');
 				$this->load->view('user/signup');
 				$this->load->view('master_page/footer');
@@ -98,7 +98,7 @@
 					if($this->User->adduser($data)){
 						redirect('Logins/index');	
 					}else{
-						$this->load->view('master_page/header');
+						$this->load->view('master_page/header_login');
 						$this->load->view('master_page/logo');
 						$this->load->view('user/signup');
 						$this->load->view('master_page/footer');
@@ -113,7 +113,7 @@
 			}
 			
 			$data['result'] = $this->User->get_current_user($this->session->userdata('user_id'));
-			$this->load->view('master_page/header');
+			$this->load->view('master_page/header_login');
 			$this->load->view('master_page/logo');
 			$this->load->view('user/profile', $data);
 			$this->load->view('master_page/footer');

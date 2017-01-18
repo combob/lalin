@@ -1,60 +1,9 @@
-<!--
-	<h2> Create Item </h2>
-	<?php 
-		
-		echo form_open_multipart('items/insert');
-		echo form_label('Item Name');
-		echo form_input('item_name');
-		echo br();
-		echo form_label('Brand');
-	?>
-	<select  name="brand">
-	<?php 
-		foreach($result->result() as $bran){
-				echo '<option value="'.$bran->brand_name.'">'.$bran->brand_name.'</option>';
-		}
-	?>
-	</select>
-	<br />
-	<?php echo form_label('Category');?>
-	<select name="category">
-	<?php 
-		foreach($posts->result() as $cate){
-				echo '<option value="'.$cate->category_name.'">'.$cate->category_name.'</option>';
-		}
-	?>
-	</select>
-	<br />
-	<?php echo form_label('Shop');?>
-	<select name="shop">
-	<?php 
-		foreach($shop->result() as $shops){
-				echo '<option value="'.$shops->shop_name.'">'.$shops->shop_name.'</option>';
-		}
-	?>
-	</select>
-	<?php
-		echo br();
-		echo form_label('Price');
-		echo form_input('price');
-		echo br();
-		echo form_label('Description');
-		echo form_textarea('description');
-		echo br();
-		echo form_upload('thumbnail');
-		echo br();
-		echo form_submit('save', 'Save');
 
-		//echo $errors;
-		
-	?>-->
-
-	
 	    <!-- add item process -->
     <div class="row bottom70">
     <div class="large-12 columns top20">
       <div class="dashboard-noborder">
-		<?php echo form_open_multipart('items/insert', array('id' => 'fromedit'));?>
+		<?php echo form_open_multipart('', array('id' => 'fromedit'));?>
         
           <h5 class="top20">Product Information</h5>
           <div class="row">
@@ -136,7 +85,10 @@
                       <textarea rows="8" name="description" placeholder="Description" required></textarea>
                           </div>
                 </div>
-				
+
+
+                
+
                 <div class="row">
                   <div class="large-4 columns">
                       <label for="right-label" class="right inline"><span class="red"> * </span>Product Photo</label>
@@ -194,17 +146,13 @@
                           }
                         } 
                     </script>
-
-
-                    
-
-
                       </div>
                     </div>
                           </div>
                 </div>
             </div>
           </div>
+		  
           <div class="dashed top50"></div>
           <div class="row">
             <div class="large-8 columns??"></div>
