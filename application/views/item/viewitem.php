@@ -36,8 +36,8 @@
                           </td>
                           <td><?php echo $value->item_name;?></td>
                           <td>
-							<!--<td><img src="<?php echo base_url('uploads/'.$value->banner);?>"></td>-->
-                            <img src="http://dalin-pc/mekong/wp-content/themes/ict4gshop/uploads/products/p91.jpg">
+							<img src="<?php echo base_url('uploads/thumbnail/'.$value->img_one);?>">
+                            
                           </td>
                           <td>$ <?php echo $value->price;?></td>
                           <td><?php echo $value->category;?></td>

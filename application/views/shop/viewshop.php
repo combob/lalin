@@ -1,4 +1,14 @@
-
+	<script type="text/javascript"> 
+						function changeimg(){
+							var status = document.getElementsByClassName("status")[0];
+							
+							if(status.src.match("<?php echo base_url('uploads/no.png');?>")){
+								status.src = "<?php echo base_url('uploads/yes.png');?>";
+							}else{
+								status.src = "<?php echo base_url('uploads/no.png');?>";
+							}
+						}
+					</script>
 	<!-- manage item     -->
     <div class="row bottom70">
         <div class="large-12 columns top20">
@@ -35,12 +45,13 @@
                           </td>
                           <td><?php echo $value->shop_name;?></td>
                           <td>
-							<!--<td><img src="<?php echo base_url('uploads/'.$value->banner);?>"></td>-->
-                            <img src="http://dalin-pc/mekong/wp-content/themes/ict4gshop/uploads/products/p91.jpg">
+							<img src="<?php echo base_url('uploads/banner/'.$value->banner);?>">
                           </td>
                           <td><?php echo $value->category;?></td>
                           <td>
-                            <div class="button_edit active"></div>
+                            <div class="button_edit active">
+								<img class="status" onclick="changeimg(this)" src="<?php echo base_url('uploads/yes.png');?>">
+							</div>
                           </td>
                           <td>
                             <?php echo anchor('shops/edit/'.$value->shop_id, 'Edit');?>|
@@ -53,6 +64,7 @@
 						?>
                       </tbody>
                     </table>
+					
                     </div> 
                   </div>
                 </div>

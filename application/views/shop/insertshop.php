@@ -96,7 +96,7 @@
 													<div class="product_img_3 addmore">
 														<img src="img/no-image.png">
 													</div>
-													<input type="file" name="product_img[]" id="product_img_3" rowNum="3" onchange="readURLmat(this);" title="" />
+													<input type="file" name="pro_img" id="product_img_3" rowNum="3" onchange="readURLmat(this);" title="" />
 												</div>
 												
 												<script type="text/javascript">

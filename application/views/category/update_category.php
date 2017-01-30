@@ -30,7 +30,7 @@
     <div class="row bottom70">
     <div class="large-12 columns top20">
       <div class="dashboard-noborder">
-		<?php echo form_open_multipart('categories/insert', array('id' => 'fromedit'));?>
+		<?php echo form_open_multipart('categories/do_edit', array('id' => 'fromedit'));?>
           <h5 class="top20">Product Information</h5>
           <div class="row">
             <div class="large-8 columns??">
@@ -71,9 +71,9 @@
                       <div class="row" id="multi-upload">
                         <div id="img_block" class="large-3 columns name-field pro_file left">
                             <div class="product_img_3 addmore">
-								<img src="img/no-image.png">
+								<img src="<?php echo base_url('uploads/images/'.$result->image);?>">
 							</div>
-							<input type="file" name="product_img[]" id="product_img_3" rowNum="3" onchange="readURLmat(this);" title="" />
+							<input type="file" name="image" id="product_img_3" rowNum="3" onchange="readURLmat(this);" title="" />
                          </div>
                         
                         <script type="text/javascript">

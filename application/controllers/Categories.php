@@ -25,6 +25,22 @@
 			$data['description'] = $this->input->post('description');
 			$data['user_id'] = $this->session->userdata('user_id');
 			
+			// stored in folder uploads
+			$config['upload_path'] = './uploads/images/';
+			// allowed .git/.jpg/.png
+			$config['allowed_types'] = 'gif|jpg|png|jpeg';
+			//$this->upload->initialize($config);
+			$this->load->library('upload', $config);
+			// check img
+			
+			if($this->upload->do_upload('image')){
+				//var_dump($this->upload->data());
+				$file_info = $this->upload->data();
+				$data['image'] = $file_info['file_name'];
+			}else{
+				echo 'no';
+			}
+			
 			if($this->Category->insert_category($data)){
 					redirect('Categories/index');	
 				}else{
@@ -53,6 +69,22 @@
 			$data['description'] = $this->input->post('description');
 			$data['user_id'] = $this->session->userdata('user_id');
 			$cateId = $this->input->post('cate_id');
+			
+			// stored in folder uploads
+			$config['upload_path'] = './uploads/images/';
+			// allowed .git/.jpg/.png
+			$config['allowed_types'] = 'gif|jpg|png|jpeg';
+			//$this->upload->initialize($config);
+			$this->load->library('upload', $config);
+			// check img
+			
+			if($this->upload->do_upload('image')){
+				//var_dump($this->upload->data());
+				$file_info = $this->upload->data();
+				$data['image'] = $file_info['file_name'];
+			}else{
+				echo 'no';
+			}
 			
 			if($this->Category->category_update($cateId, $data)){
 				redirect('categories/index');

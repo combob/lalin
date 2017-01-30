@@ -43,13 +43,12 @@
 									<div class="large-4 columns">
 										<label for="right-label" class="right inline"><span class="red"> * </span>Category</label>
 									</div>
+									
 									<div class="large-8 columns name-field">
 										<select  name="category">
-											<?php 
-												foreach($posts->result() as $category){
-													echo '<option value="'.$category->category_name.'">'.$category->category_name.'</option>';
-												}
-											?>
+											<?php foreach($posts->result() as $category){?>
+											<option <?php if($category->category_name == $result->category){echo 'selected="selected"';}?> value="<?php echo $category->category_name;?>"><?php echo $category->category_name;?></option>
+											<?php }?>
 										</select>
 									</div>
 								</div>
@@ -72,9 +71,9 @@
 											<div class="row" id="multi-upload">
 												<div id="img_block" class="large-3 columns name-field pro_file left">
 													<div class="product_img_3 addmore">
-														<img src="img/no-image.png">
+														<img src="<?php echo base_url('uploads/banner/'.$result->banner);?>">
 													</div>
-													<input type="file" name="product_img[]" id="product_img_3" rowNum="3" onchange="readURLmat(this);" title="" />
+													<input type="file" name="pro_img" id="product_img_3" rowNum="3" onchange="readURLmat(this);" title="" />
 												</div>
 												
 												<script type="text/javascript">

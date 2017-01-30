@@ -40,7 +40,7 @@
 			}
 			
 			//form validaton 
-			$this->form_validation->set_rules('item_name', 'Item Name', 'required');
+			/*$this->form_validation->set_rules('item_name', 'Item Name', 'required');
 			$this->form_validation->set_rules('price', 'Price', 'required');
 			$this->form_validation->set_rules('category', 'Category', 'required');
 			$this->form_validation->set_rule('brand', 'Brand', 'required');
@@ -57,7 +57,7 @@
 				$this->load->view('master_page/menu');
 				$this->load->view('item/insertitem',$data);
 				$this->load->view('master_page/footer');
-			}else{
+			}else{*/
 				
 				// get data form input
 				$data['item_name'] = $this->input->post('item_name');
@@ -66,33 +66,72 @@
 				$data['category'] = $this->input->post('category');
 				$data['brand'] = $this->input->post('brand');
 				$data['shop'] = $this->input->post('shop');
+				$data['best_seller'] = $this->input->post('best_seller');
 				$data['user_id'] = $this->session->userdata('user_id');
 				
-				// stored in folder uploads
-				$config['upload_path'] = './uploads/thumbnail/';
-				// allowed .git/.jpg/.png
-				$config['allowed_types'] = 'gif|jpg|png|jpeg';
-				//$this->upload->initialize($config);
-				$this->load->library('upload', $config);
-				
-				// check img
-				if($this->upload->do_upload('thumbnail')){
-					$file_info = $this->upload->data();
-					$data['thumbnail'] = $file_info['file_name'];
-				}else{
-					echo 'no';
-				}
-				
-				// check data
 				if($this->Item->insert_item($data)){
-						redirect('Items/index');	
+					$variable['result'] = $this->Item->get_itemId();
+					foreach($variable as $key => $value){
+						$item_id = $value[0]['item_id'];
+					}
+					
+					$config['upload_path'] = './uploads/thumbnail';
+					$config['allowed_types'] = 'gif|jpg|png|jpeg';
+					
+					if($this->input->post('add_item')){
+						
+						if(!empty($_FILES['thumbnail1']['name'])){
+							$this->load->library('upload', $config);
+							$this->upload->do_upload('thumbnail1');
+							$img_one = $this->upload->data();
+							//var_dump($img_one = $this->upload->data());
+							//echo '<br />';
+						}
+						
+						if(!empty($_FILES['thumbnail2']['name'])){
+							$this->load->library('upload', $config);
+							$this->upload->do_upload('thumbnail2');
+							$img_two = $this->upload->data();
+							//var_dump($img_two = $this->upload->data());
+							//echo '<br />';
+						}
+						
+						if(!empty($_FILES['thumbnail3']['name'])){
+							$this->load->library('upload', $config);
+							$this->upload->do_upload('thumbnail3');
+							$img_three = $this->upload->data();
+							//var_dump($img_three = $this->upload->data());
+							//echo '<br />';
+						}
+						
+						if(!empty($_FILES['thumbnail4']['name'])){
+							$this->load->library('upload', $config);
+							$this->upload->do_upload('thumbnail4');
+							$img_four = $this->upload->data();
+							//var_dump($img_four = $this->upload->data());die();
+						}
+						
+						$data1 = array(
+								'img_one' => $img_one['file_name'],
+								'img_two' => $img_two['file_name'],
+								'img_three' => $img_three['file_name'],
+								'img_four' => $img_four['file_name'],
+								'item_id' => $item_id
+							);
+							
+						if($this->Item->img_insert($data1)){
+							redirect('Items/index');
+						}else{
+							echo 'no';
+						};
+						
+						
 					}else{
 						redirect('Items/additem');
 						echo 'no';
 					}
+				}
 			}
-			
-		}
 		
 		function delete($id){
 			if($this->Item->delete_item($id)){
@@ -115,9 +154,6 @@
 			$data['shop'] = $this->Item->get_shop();
 			$data['result'] = $this->Item->item_edit($id);
 			
-			//var_dump($data['category']);
-			//die();
-			
 			$this->load->view('item/update_item', $data);
 			$this->load->view('master_page/footer');
 			
@@ -132,16 +168,50 @@
 			$data['user_id'] = $this->session->userdata('user_id');
 			$itemId = $this->input->post('item_id');
 			
-			//var_dump($data['category']);
+			$config['upload_path'] = './uploads/thumbnail';
+			$config['allowed_types'] = 'gif|jpg|png|jpeg';
+			$this->load->library('upload', $config);
+				
+				if($this->upload->do_upload('thumbnail1')){
+					//var_dump($this->upload->data());
+					$file_info = $this->upload->data();
+					$data1['img_one'] = $file_info['file_name'];
+				}
+				
+				if($this->upload->do_upload('thumbnail2')){
+					//var_dump($this->upload->data());
+					$file_info = $this->upload->data();
+					$data1['img_two'] = $file_info['file_name'];
+				}
+				
+				if($this->upload->do_upload('thumbnail3')){
+					//var_dump($this->upload->data());
+					$file_info = $this->upload->data();
+					$data1['img_three'] = $file_info['file_name'];
+				}
+				
+				if($this->upload->do_upload('thumbnail4')){
+					//var_dump($this->upload->data());
+					$file_info = $this->upload->data();
+					$data1['img_four'] = $file_info['file_name'];
+				}
+				
+				$data1['item_id'] = $itemId;
+				$image_id = $itemId;
+			
+			//var_dump($data1);
 			//die();
+			
+			if($data1 == null){
+				echo 'null';
+			}
 			if($this->Item->item_update($itemId, $data)){
-				redirect('items/index');
+				if($this->Item->item_img_update($image_id, $data1)){
+					redirect('items/index');
+				}
+				
 			}else{
-				$data['item_name'] = $this->input->post('item_name');
-				$data['price'] = $this->input->post('price');
-				$data['category'] = $this->input->post('category');
-				$data['user_id'] = $this->session->userdata('user_id');
-				$itemId = $this->input->post('item_id');
+				echo 'No';
 			}
 		}
 		

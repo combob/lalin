@@ -50,7 +50,7 @@
 									<label for="right-label" class="right inline">Description</label>
 								</div>
 								<div class="large-8 columns name-field">
-									<textarea rows="8" name="description" placeholder="Description" value="<?php echo $result->description;?>"></textarea>
+									<textarea rows="8" name="description" placeholder="Description"><?php echo $result->description;?></textarea>
 								</div>
 							</div>
 							<?php echo form_hidden('brand_id', $result->brand_id);?>
@@ -63,9 +63,9 @@
 										<div class="row" id="multi-upload">
 											<div id="img_block" class="large-3 columns name-field pro_file left">
 												<div class="product_img_3 addmore">
-													<img src="img/no-image.png">
+													<img src="<?php echo base_url('uploads/logo/'.$result->logo);?>">
 												</div>
-												<input type="file" name="product_img[]" id="product_img_3" rowNum="3" onchange="readURLmat(this);" title="" />
+												<input type="file" name="logo" id="product_img_3" rowNum="3" onchange="readURLmat(this);" title="" />
 											 </div>
 											
 											<script type="text/javascript">

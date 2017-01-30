@@ -113,6 +113,7 @@
 			$this->load->view('master_page/menu');
 			$data['result'] = $this->Shop->shop_edit($id);
 			$data['posts'] = $this->Shop->get_categories();
+			//var_dump($data['posts']); die();
 			$this->load->view('shop/update_shop', $data);
 			$this->load->view('master_page/footer');
 			
@@ -125,6 +126,19 @@
 			$data['description'] = $this->input->post('description');
 			$data['user_id'] = $this->session->userdata('user_id');
 			$shopId = $this->input->post('shop_id');
+			
+			$config['upload_path'] = './uploads/banner';
+				$config['allowed_types'] = 'gif|jpg|png|jpeg';
+				//$this->upload->initialize($config);
+				$this->load->library('upload', $config);
+				
+				if($this->upload->do_upload('pro_img')){
+					//var_dump($this->upload->data());
+					$file_info = $this->upload->data();
+					$data['banner'] = $file_info['file_name'];
+				}else{
+					echo 'Can not upload img';
+				}
 			
 			
 			$data1['contact_name'] = $this->input->post('contact_name');

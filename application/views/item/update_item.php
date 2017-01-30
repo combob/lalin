@@ -24,7 +24,6 @@
 	
 	?>
 	-->
-	
 	<div class="row bottom70"> 
 		<div class="large-12 columns top20"> 
 			<div class="dashboard-moborder"> 
@@ -47,11 +46,9 @@
 								</div>
 								<div class="large-8 columns name-field"> 
 									<select name="category">
-										<?php 
-											foreach($category->result() as $cate){
-													echo '<option selected="'.$result->category.'" value="'.$cate->category_name.'">'.$cate->category_name.'</option>';
-											}
-										?>
+										<?php foreach($category->result() as $cate){?>
+										<option <?php if($cate->category_name == $result->category){echo 'selected="selected"';}?> value="<?php echo $cate->category_name;?>"><?php echo $cate->category_name;?></option>
+										<?php }?>
 									</select>
 								</div>
 							</div>
@@ -62,11 +59,9 @@
 								</div>
 								<div class="large-8 columns name-field">
 									<select  name="brand">
-										<?php 
-											foreach($brand->result() as $bran){
-													echo '<option selected="'.$result->brand.'" value="'.$bran->brand_name.'">'.$bran->brand_name.'</option>';
-											}
-										?>
+										<?php foreach($brand->result() as $bran){?>
+										<option <?php if($bran->brand_name == $result->brand){echo 'selected="selected"';}?> value="<?php echo $bran->brand_name;?>"><?php echo $bran->brand_name;?></option>
+										<?php }?>
 									</select>
 								</div>
 							</div>
@@ -86,11 +81,9 @@
 								</div>
 								<div class="large-8 columns name-field">
 									<select name="shop">
-										<?php 
-											foreach($shop->result() as $shops){
-													echo '<option selected="'.$result->shop.'" value="'.$shops->shop_name.'">'.$shops->shop_name.'</option>';
-											}
-										?>
+										<?php foreach($shop->result() as $shops){?>
+										<option <?php if($shops->shop_name == $result->shop){echo 'selected="selected"';}?> value="<?php echo $shops->shop_name;?>"><?php echo $shops->shop_name;?></option>
+										<?php }?>
 									</select>
 								</div>
 							</div>
@@ -122,49 +115,50 @@
 									<div class="plupload">
 										<div class="row" id="multi-upload">
 											<div id="img_block" class="large-3 columns name-field pro_file">
-												<div class="product_img">
-													<img src="img/no-image.png">
+												<div class="product_img addmore">
+													<img src="<?php echo base_url('uploads/thumbnail/'.$result->img_one);?>">
 												</div>
-												<input type="file" name="product_main_img" id="product_main_img" onchange="readURL(this);" title="" />
+												<input type="file" name="thumbnail1" id="product_main_img" onchange="readURL(this);" title="" />
 											</div>
 											
 											<div id="img_block" class="large-3 columns name-field pro_file left">
 												<div class="product_img_1 addmore">
-													<img src="img/no-image.png">
+													<img src="<?php echo base_url('uploads/thumbnail/'.$result->img_two);?>">
 												</div>
-												<input type="file" name="product_img[]" id="product_img_1" rowNum="1" onchange="readURLmat(this);" title="" />
+												<input type="file" multiple name="thumbnail2" id="product_img_1" rowNum="1" onchange="readURLmat(this);" title="" />
 											</div>
+											
 											<div id="img_block" class="large-3 columns name-field pro_file left">
 												<div class="product_img_2 addmore">
-													<img src="img/no-image.png">
+													<img src="<?php echo base_url('uploads/thumbnail/'.$result->img_three);?>">
 												</div>
-												<input type="file" name="product_img[]" id="product_img_2" rowNum="2" onchange="readURLmat(this);" title="" />
+												<input type="file" multiple name="thumbnail3" id="product_img_2" rowNum="2" onchange="readURLmat(this);" title="" />
 											</div>
 											
 											<div id="img_block" class="large-3 columns name-field pro_file left">
 												<div class="product_img_3 addmore">
-													<img src="img/no-image.png">
+													<img src="<?php echo base_url('uploads/thumbnail/'.$result->img_four);?>">
 												</div>
-												<input type="file" name="product_img[]" id="product_img_3" rowNum="3" onchange="readURLmat(this);" title="" />
+												<input type="file" multiple name="thumbnail4" id="product_img_3" rowNum="3" onchange="readURLmat(this);" title="" />
 											</div>
-																	
-											<script type="text/javascript">
-												function readURLmat(input) {
-													if (input.files && input.files[0]) {
-														var reader = new FileReader();
-														var rowNum=$(input).attr('rowNum');
-														reader.onload = function (i) {
-															$('.product_img_'+rowNum+'.addmore').html('<a class="delete remove_uploaded" id="delete'+rowNum+'"></a><img class="showimg" id="img'+rowNum+'" width="100" height="87" src="'+i.target.result+'">');      
-															$('#delete'+rowNum).on('click', function(){
-																$('#img'+rowNum).remove();
-																$('#delete'+rowNum).remove();
-																$('.product_img_'+rowNum+'.addmore').prepend('<img src="http://dalin-pc/mekong/wp-content/themes/ict4gshop/img/no-image.png"/>');
-																});
-															};
-														reader.readAsDataURL(input.files[0]);
-													}
-												} 
-											</script>
+													
+										<script type="text/javascript">
+											function readURLmat(input) {
+											  if (input.files && input.files[0]) {
+												  var reader = new FileReader();
+												  var rowNum=$(input).attr('rowNum');
+												  reader.onload = function (i) {
+													  $('.product_img_'+rowNum+'.addmore').html('<a class="delete remove_uploaded" id="delete'+rowNum+'"></a><img class="showimg" id="img'+rowNum+'" width="100" height="87" src="'+i.target.result+'">');      
+														$('#delete'+rowNum).on('click', function(){
+														  $('#img'+rowNum).remove();
+														  $('#delete'+rowNum).remove();
+														  $('.product_img_'+rowNum+'.addmore').prepend('<img src="http://dalin-pc/mekong/wp-content/themes/ict4gshop/img/no-image.png"/>');
+														});
+												  };
+												  reader.readAsDataURL(input.files[0]);
+											  }
+											} 
+										</script>
 										</div>
 									</div>
 								</div>
@@ -176,7 +170,7 @@
 						<div class="large-8 columns??"></div>
 						<div class="row top20">
 							<div class="large-8 columns right">
-								<input type="submit" name="add_item" class="tiny button" value="Save">
+								<input type="submit" name="save" class="tiny button" value="Save">
 							</div>
 						</div> 
 					</div> 

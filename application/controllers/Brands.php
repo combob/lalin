@@ -36,6 +36,29 @@
 			$data['description'] = $this->input->post('description');
 			$data['user_id'] = $this->session->userdata('user_id');
 			
+			// stored in folder uploads
+			$config['upload_path'] = './uploads/logo/';
+			// allowed .git/.jpg/.png/.jpeg
+			$config['allowed_types'] = 'gif|jpg|png|jpeg';
+			//$this->upload->initialize($config);
+			$this->load->library('upload', $config);
+			// check img
+			
+			if($this->upload->do_upload('logo')){
+				//var_dump($this->upload->data());
+				$file_info = $this->upload->data();
+				$data['logo'] = $file_info['file_name'];
+			}else{
+				echo 'no';
+			}
+			
+			if($this->Brand->insert_brand($data)){
+				redirect('Brands/index');
+				echo 'yes';
+			}else{
+				redirect('Brands/add_brand');
+				echo 'no';
+			}
 			
 			if($this->Brand->insert_brand($data)){
 				redirect('Brands/index');
@@ -71,12 +94,28 @@
 			if(!$this->session->userdata('user_id')){
 				redirect('logins/index');
 			}
-			
+
 			$data['brand_name'] = $this->input->post('brand_name');
 			$data['alias'] = $this->input->post('alias');
 			$data['description'] = $this->input->post('description');
 			$data['user_id'] = $this->session->userdata('user_id');
 			$brandId = $this->input->post('brand_id');
+			
+			// stored in folder uploads
+			$config['upload_path'] = './uploads/logo/';
+			// allowed .git/.jpg/.png/.jpeg
+			$config['allowed_types'] = 'gif|jpg|png|jpeg';
+			//$this->upload->initialize($config);
+			$this->load->library('upload', $config);
+			// check img
+			
+			if($this->upload->do_upload('logo')){
+				//var_dump($this->upload->data());
+				$file_info = $this->upload->data();
+				$data['logo'] = $file_info['file_name'];
+			}else{
+				echo 'no';
+			}
 			
 			if($this->Brand->brand_update($brandId, $data)){
 				redirect('brands/index');
